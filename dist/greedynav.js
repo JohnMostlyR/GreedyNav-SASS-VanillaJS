@@ -77,8 +77,15 @@
   w.addEventListener('click', function (ev) {
     if (ev.target.classList.contains('c-greedy-nav__button')) {
       OVERFLOW_LIST.classList.toggle('s-hidden');
+    } else {
+
+      OVERFLOW_LIST.classList.add('s-hidden');
     }
   });
+
+  OVERFLOW_LIST.addEventListener('click', function (ev) {
+    ev.stopPropagation();
+  }, false);
 
   fitAndAdjust();
 })(typeof global !== 'undefined' ? global : window);
