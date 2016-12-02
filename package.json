@@ -1,5 +1,5 @@
 {
-  "name": "GreedyNav-SASS-ES6",
+  "name": "GreedyNav-SASS-VanillaJS",
   "version": "1.0.0",
   "description": "A responsive navigation menu that stacks items into a dropdown menu when they overflow",
   "main": "index.js",
@@ -25,10 +25,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mensae/GreedyNav-SASS=ES6.git"
+    "url": "git+https://github.com/Mensae/GreedyNav-SASS-VanillaJS.git"
   },
   "bugs": {
-    "url": "https://github.com/Mensae/GreedyNav-SASS=ES6/issues"
+    "url": "https://github.com/Mensae/GreedyNav-SASS-VanillaJS/issues"
   },
-  "homepage": "https://github.com/Mensae/GreedyNav-SASS=ES6#readme"
+  "homepage": "https://github.com/Mensae/GreedyNav-SASS-VanillaJS#readme"
 }
