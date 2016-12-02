@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Greedy Navigation</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="greedynav.css">
+    <style>
+        html {
+            font-family: Helvetica, sans-serif;
+        }
+
+        body {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+<nav class='c-greedy-nav'>
+    <ul class='c-greedy-nav__list'>
+        <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>navbar</a></li>
+        <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>that</a></li>
+        <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>handles</a></li>
+        <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>overflowing</a></li>
+        <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>menu</a></li>
+        <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>elements</a></li>
+        <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>effortlessly</a></li>
+    </ul>
+    <button class="c-greedy-nav__button">MENU</button>
+    <ul class='c-greedy-nav__overflow-list s-hidden'></ul>
+</nav>
+<script src="greedynav.js"></script>
+</body>
+</html>

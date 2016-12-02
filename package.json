@@ -1,0 +1,34 @@
+{
+  "name": "GreedyNav-SASS-ES6",
+  "version": "1.0.0",
+  "description": "A responsive navigation menu that stacks items into a dropdown menu when they overflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Johan Meester",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^6.4.0",
+    "babel-core": "^6.18.2",
+    "babel-preset-es2015": "^6.18.0",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
+    "grunt-postcss": "^0.8.0",
+    "grunt-sass": "^1.2.0"
+  },
+  "dependencies": {
+    "pixrem": "^3.0.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mensae/GreedyNav-SASS=ES6.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mensae/GreedyNav-SASS=ES6/issues"
+  },
+  "homepage": "https://github.com/Mensae/GreedyNav-SASS=ES6#readme"
+}
