@@ -1,86 +1,107 @@
 // Colors
-$c-greedy-nav-bg-color: #e0e0e0 !default;
-$c-greedy-nav-btn-bg-color: #c8c8c8 !default;
-$c-greedy-nav-btn-border-color: #b6b6b6 !default;
-$c-greedy-nav-btn-label-bg-color: #9f9f9f !default;
-$c-greedy-nav-btn-label-color: #f2f2f2 !default;
-$c-greedy-nav-lnk-color: #404040 !default;
-$c-greedy-nav-overflow-list-bg-color: #d8d8d8 !default;
+$c-greedy-nav-bg-color: #4792ba !default;
+$c-greedy-nav-lnk-color: #fff !default;
+$c-greedy-nav-lnk-bg-color: #4792ba !default;
+$c-greedy-nav-overflow-list-bg-color: #3881aa !default;
 
 // Layout
-$c-greedy-nav-height: 60px !default;
-$c-greedy-nav-items-alignment: flex-end !default;  //  flex-start, center or flex-end
+$c-greedy-nav-inner-width: 980px;
+$c-greedy-nav-items-alignment: flex-start !default; //  flex-start, center or flex-end
+$c-greedy-nav-space-between-items: 0 !default;
+$c-greedy-nav-bullet-size: inherit !default;
+$c-greedy-nav-space-between-bullets: 2px !default;
 
 .c-greedy-nav {
-  align-items: center;
-  background: $c-greedy-nav-bg-color;
   display: flex;
-  height: $c-greedy-nav-height;
-  position: relative;
+  justify-content: space-between;
+  max-width: $c-greedy-nav-inner-width;
+  padding-top: 2px;
+  width: 100vw;
 
-  &__button {
-    align-self: stretch;
-    background: $c-greedy-nav-btn-bg-color;
+  &__btn {
+    appearance: none;
+    background-color: transparent;
     border: 0;
-    font-size: .9rem;
-    font-weight: bold;
     outline: 0;
-    padding: 0 1rem 0 1.5rem;
-    transition: all .4s ease-out;
+    white-space: nowrap;
+  }
 
-    &::after {
-      align-items: center;
-      background: $c-greedy-nav-btn-label-bg-color;
-      border-radius: 50%;
-      color: $c-greedy-nav-btn-label-color;
-      content: attr(data-count);
-      display: inline-flex;
-      font-size: 14px;
-      height: 25px;
-      justify-content: center;
-      line-height: 14px;
-      margin-left: 1rem;
-      margin-right: calc(-1rem + -8px);
-      width: 25px;
+  &__btn--show-more {
+    display: flex;
+  }
+
+  &__bullet {
+    font-size: $c-greedy-nav-bullet-size;
+
+    &:nth-of-type(1n + 2) {
+      margin-left: $c-greedy-nav-space-between-bullets;
     }
+  }
 
-    &.s-hidden {
-      border-right: .5rem solid $c-greedy-nav-btn-border-color;
-      overflow: hidden;
-      padding: 0;
-      transition: none;
-      width: 0;
+  &__fixed {
+    display: flex;
+  }
+
+  &__greedy {
+    display: flex;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__list {
+    display: flex;
+    flex: 0 1 auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > .c-greedy-nav__item:nth-of-type(1n + 2) {
+      margin-left: $c-greedy-nav-space-between-items;
     }
   }
 
   &__link {
     color: $c-greedy-nav-lnk-color;
-  }
-
-  &__list {
-    display: flex;
-    flex: 1;
-    justify-content: $c-greedy-nav-items-alignment;
-    overflow: hidden;
-  }
-
-  &__item {
-    flex: none;
+    flex: 1 1 auto;
     padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+
+    &:hover {
+      background: $c-greedy-nav-lnk-color;
+      color: $c-greedy-nav-lnk-bg-color;
+    }
   }
 
   &__overflow-list {
-    background: $c-greedy-nav-overflow-list-bg-color;
+    background-color: $c-greedy-nav-overflow-list-bg-color;
+    border: 2px solid $c-greedy-nav-bg-color;
+    border-top: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
     position: absolute;
     right: 0;
     top: 100%;
-
-    &.s-hidden {
-      display: none;
-    }
-
-    .c-greedy-nav__item {
-      padding: 1rem;
-    }
   }
+}
+
+.l-greedy-nav {
+  background: $c-greedy-nav-bg-color;
+  display: flex;
+  justify-content: center;
+
+  &__item {
+    display: flex;
+    position: relative;
+  }
+}
+
+.s-greedy-nav-hidden {
+  display: none;
 }

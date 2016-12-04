@@ -10,11 +10,13 @@
   var DOC = w.document;
 
   var NAV = DOC.querySelector('.c-greedy-nav');
-  var VIEW_MORE_BUTTON = NAV.querySelector('.c-greedy-nav__button');
-  var VISIBLE_LIST = NAV.querySelector('.c-greedy-nav__list');
+  var VISIBLE_LIST = NAV.querySelector('.c-greedy-nav__list--visible');
   var OVERFLOW_LIST = NAV.querySelector('.c-greedy-nav__overflow-list');
+  var VIEW_MORE_ITEM = NAV.querySelector('.c-greedy-nav__list--show-more');
+  var VIEW_MORE_BUTTON = NAV.querySelector('.c-greedy-nav__btn--show-more');
+  var FIXED_BUTTON = NAV.querySelector('.c-greedy-nav__fixed');
+  var SPACE_BETWEEN_ITEMS = 0; // Set equal to stylesheet setting $c-greedy-nav-space-between-items
   var BREAK_WIDTHS = [];
-  var PADDING = 10;
 
   var numOfItems = 0;
   var totalSpace = 0;
@@ -28,6 +30,8 @@
     }
   });
 
+  var TOTAL_SPACING = SPACE_BETWEEN_ITEMS * numOfItems;
+
   var availableSpace = void 0;
   var numOfVisibleItems = void 0;
   var requiredSpace = void 0;
@@ -35,18 +39,17 @@
   /** @function fitAndAdjust */
   var fitAndAdjust = function f() {
     // Get current client width
-    availableSpace = NAV.clientWidth - PADDING;
+    availableSpace = NAV.clientWidth - FIXED_BUTTON.clientWidth - TOTAL_SPACING;
 
-    if (VIEW_MORE_BUTTON.classList.contains('s-hidden')) {
-      availableSpace -= VIEW_MORE_BUTTON.clientWidth;
-    }
+    availableSpace -= VIEW_MORE_BUTTON.clientWidth;
+    if (VIEW_MORE_ITEM.classList.contains('s-greedy-nav-hidden')) {}
 
     numOfVisibleItems = VISIBLE_LIST.getElementsByTagName('li').length;
     requiredSpace = BREAK_WIDTHS[numOfVisibleItems - 1];
 
     if (requiredSpace > availableSpace) {
       // There is not enough room
-      OVERFLOW_LIST.insertBefore(VISIBLE_LIST.lastChild, OVERFLOW_LIST.lastChild);
+      OVERFLOW_LIST.insertBefore(VISIBLE_LIST.lastChild, OVERFLOW_LIST.firstChild);
       numOfVisibleItems -= 1;
 
       // Check again
@@ -64,9 +67,9 @@
     VIEW_MORE_BUTTON.dataset.count = numOfItems - numOfVisibleItems;
 
     if (numOfVisibleItems === numOfItems) {
-      VIEW_MORE_BUTTON.classList.add('s-hidden');
+      VIEW_MORE_ITEM.classList.add('s-greedy-nav-hidden');
     } else {
-      VIEW_MORE_BUTTON.classList.remove('s-hidden');
+      VIEW_MORE_ITEM.classList.remove('s-greedy-nav-hidden');
     }
   };
 
@@ -75,11 +78,10 @@
 
   // Listen for click event
   w.addEventListener('click', function (ev) {
-    if (ev.target.classList.contains('c-greedy-nav__button')) {
-      OVERFLOW_LIST.classList.toggle('s-hidden');
+    if (ev.target.classList.contains('c-greedy-nav__btn--show-more') || ev.target.parentNode.classList.contains('c-greedy-nav__btn--show-more')) {
+      OVERFLOW_LIST.classList.toggle('s-greedy-nav-hidden');
     } else {
-
-      OVERFLOW_LIST.classList.add('s-hidden');
+      OVERFLOW_LIST.classList.add('s-greedy-nav-hidden');
     }
   });
 
