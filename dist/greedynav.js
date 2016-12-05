@@ -18,6 +18,22 @@
   var SPACE_BETWEEN_ITEMS = 0; // Set equal to stylesheet setting $c-greedy-nav-space-between-items
   var BREAK_WIDTHS = [];
 
+  var theBullets = VIEW_MORE_BUTTON.querySelectorAll('.c-greedy-nav__bullet');
+  var interval = 100;
+  var bulletTimers = [];
+
+  var animateEllipses = function animateEllipses() {
+    bulletTimers.forEach(function (timer) {
+      clearTimeout(timer);
+    });
+    theBullets.forEach(function (bullet, index) {
+      bullet.style = 'display: none;';
+      bulletTimers.push(setTimeout(function () {
+        bullet.removeAttribute('style');
+      }, interval * (index + 1)));
+    });
+  };
+
   var numOfItems = 0;
   var totalSpace = 0;
 
@@ -35,14 +51,17 @@
   var availableSpace = void 0;
   var numOfVisibleItems = void 0;
   var requiredSpace = void 0;
+  var showMoreAnimationTimer = void 0;
 
   /** @function fitAndAdjust */
-  var fitAndAdjust = function f() {
+  var fitAndAdjust = function f(recheck) {
+    if (!recheck) {
+      clearTimeout(showMoreAnimationTimer);
+    }
+
     // Get current client width
     availableSpace = NAV.clientWidth - FIXED_BUTTON.clientWidth - TOTAL_SPACING;
-
     availableSpace -= VIEW_MORE_BUTTON.clientWidth;
-    if (VIEW_MORE_ITEM.classList.contains('s-greedy-nav-hidden')) {}
 
     numOfVisibleItems = VISIBLE_LIST.getElementsByTagName('li').length;
     requiredSpace = BREAK_WIDTHS[numOfVisibleItems - 1];
@@ -53,23 +72,23 @@
       numOfVisibleItems -= 1;
 
       // Check again
-      f();
+      f(true);
     } else if (availableSpace > BREAK_WIDTHS[numOfVisibleItems]) {
       // More than enough room
       VISIBLE_LIST.appendChild(OVERFLOW_LIST.firstChild);
       numOfVisibleItems += 1;
 
       // Check again
-      f();
+      f(true);
     }
-
-    // Update the 'view more' button
-    VIEW_MORE_BUTTON.dataset.count = numOfItems - numOfVisibleItems;
 
     if (numOfVisibleItems === numOfItems) {
       VIEW_MORE_ITEM.classList.add('s-greedy-nav-hidden');
     } else {
       VIEW_MORE_ITEM.classList.remove('s-greedy-nav-hidden');
+      showMoreAnimationTimer = setTimeout(function () {
+        animateEllipses(theBullets);
+      }, 1000);
     }
   };
 

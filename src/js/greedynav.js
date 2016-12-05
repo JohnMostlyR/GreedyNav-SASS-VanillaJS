@@ -16,6 +16,22 @@
   const SPACE_BETWEEN_ITEMS = 0; // Set equal to stylesheet setting $c-greedy-nav-space-between-items
   const BREAK_WIDTHS = [];
 
+  const theBullets = VIEW_MORE_BUTTON.querySelectorAll('.c-greedy-nav__bullet');
+  const interval = 100;
+  const bulletTimers = [];
+
+  const animateEllipses = () => {
+    bulletTimers.forEach((timer) => {
+      w.clearTimeout(timer);
+    });
+    theBullets.forEach((bullet, index) => {
+      bullet.style = 'display: none;';
+      bulletTimers.push(w.setTimeout(() => {
+        bullet.removeAttribute('style');
+      }, interval * (index + 1)));
+    });
+  };
+
   let numOfItems = 0;
   let totalSpace = 0;
 
@@ -35,15 +51,17 @@
   let availableSpace;
   let numOfVisibleItems;
   let requiredSpace;
+  let showMoreAnimationTimer;
 
   /** @function fitAndAdjust */
-  const fitAndAdjust = (function f() {
+  const fitAndAdjust = (function f(recheck) {
+    if (!recheck) {
+      w.clearTimeout(showMoreAnimationTimer);
+    }
+
     // Get current client width
     availableSpace = NAV.clientWidth - FIXED_BUTTON.clientWidth - TOTAL_SPACING;
-
     availableSpace -= VIEW_MORE_BUTTON.clientWidth;
-    if (VIEW_MORE_ITEM.classList.contains('s-greedy-nav-hidden')) {
-    }
 
     numOfVisibleItems = VISIBLE_LIST.getElementsByTagName('li').length;
     requiredSpace = BREAK_WIDTHS[numOfVisibleItems - 1];
@@ -54,23 +72,23 @@
       numOfVisibleItems -= 1;
 
       // Check again
-      f();
+      f(true);
     } else if (availableSpace > BREAK_WIDTHS[numOfVisibleItems]) {
       // More than enough room
       VISIBLE_LIST.appendChild(OVERFLOW_LIST.firstChild);
       numOfVisibleItems += 1;
 
       // Check again
-      f();
+      f(true);
     }
-
-    // Update the 'view more' button
-    VIEW_MORE_BUTTON.dataset.count = numOfItems - numOfVisibleItems;
 
     if (numOfVisibleItems === numOfItems) {
       VIEW_MORE_ITEM.classList.add('s-greedy-nav-hidden');
     } else {
       VIEW_MORE_ITEM.classList.remove('s-greedy-nav-hidden');
+      showMoreAnimationTimer = w.setTimeout(() => {
+        animateEllipses(theBullets);
+      }, 1000);
     }
   });
 
