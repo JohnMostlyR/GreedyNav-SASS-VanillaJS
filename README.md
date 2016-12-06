@@ -16,33 +16,34 @@ http://codepen.io/jmeester/pen/yVpYqm
     <link rel="stylesheet" href="greedynav.css">
 </head>
 <body>
-	<nav class='c-greedy-nav'>
-    	<ul class='c-greedy-nav__list'>
-        	<li class="c-greedy-nav__item">
-            	<a class="c-greedy-nav__link" href='#'>navbar</a>
-            </li>
-        	<li class="c-greedy-nav__item">
-            	<a class="c-greedy-nav__link" href='#'>that</a>
-            </li>
-        	<li class="c-greedy-nav__item">
-            	<a class="c-greedy-nav__link" href='#'>handles</a>
-            </li>
-        	<li class="c-greedy-nav__item">
-            	<a class="c-greedy-nav__link" href='#'>overflowing</a>
-            </li>
-        	<li class="c-greedy-nav__item">
-            	<a class="c-greedy-nav__link" href='#'>menu</a>
-            </li>
-        	<li class="c-greedy-nav__item">
-            	<a class="c-greedy-nav__link" href='#'>elements</a>
-            </li>
-        	<li class="c-greedy-nav__item">
-            	<a class="c-greedy-nav__link" href='#'>effortlessly</a>
-            </li>
-    	</ul>
-    	<button class="c-greedy-nav__button">MENU</button>
-    	<ul class='c-greedy-nav__overflow-list s-hidden'></ul>
-	</nav>
+    <div class="l-greedy-nav">
+        <nav class='c-greedy-nav'>
+            <div class="c-greedy-nav__greedy">
+                <ul class='c-greedy-nav__list c-greedy-nav__list--visible'>
+                    <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>navbar</a></li>
+                    <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>that</a></li>
+                    <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>handles</a></li>
+                    <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>overflowing</a></li>
+                    <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>menu</a></li>
+                    <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>elements</a></li>
+                    <li class="c-greedy-nav__item"><a class="c-greedy-nav__link" href='#'>effortlessly</a></li>
+                </ul>
+                <ul class='c-greedy-nav__list c-greedy-nav__list--show-more'>
+                    <li class="l-greedy-nav__item">
+                        <button class="c-greedy-nav__btn c-greedy-nav__btn--show-more c-greedy-nav__link">
+                            <span class="c-greedy-nav__bullet">&bull;</span>
+                            <span class="c-greedy-nav__bullet">&bull;</span>
+                            <span class="c-greedy-nav__bullet">&bull;</span>
+                        </button>
+                        <ul class='c-greedy-nav__overflow-list s-greedy-nav-hidden'></ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="c-greedy-nav__fixed">
+                <a class="c-greedy-nav__link" href="#">fixed</a>
+            </div>
+        </nav>
+    </div>
 
 	<!-- Add the JavaScript -->
 	<script src="greedynav.js"></script>
