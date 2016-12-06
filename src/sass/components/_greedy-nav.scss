@@ -70,8 +70,11 @@ $c-greedy-nav-space-between-bullets: 2px !default;
     text-align: center;
     text-decoration: none;
     transition: all .2s ease-in-out;
+    white-space: nowrap;
 
-    &:hover {
+    &:active,
+    &:hover,
+    &--selected {
       background: $c-greedy-nav-lnk-color;
       color: $c-greedy-nav-lnk-bg-color;
     }
@@ -82,6 +85,7 @@ $c-greedy-nav-space-between-bullets: 2px !default;
     border: 2px solid $c-greedy-nav-bg-color;
     border-top: 0;
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
     margin: 0;
     padding: 0;
