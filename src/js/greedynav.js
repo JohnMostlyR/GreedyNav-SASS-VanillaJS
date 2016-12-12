@@ -97,7 +97,9 @@
 
   // Listen for click event
   w.addEventListener('click', (ev) => {
-    if (ev.target.classList.contains('c-greedy-nav__btn--show-more') || ev.target.parentNode.classList.contains('c-greedy-nav__btn--show-more')) {
+    if (ev.target.classList.length > 0
+      && (ev.target.classList.contains('c-greedy-nav__btn--show-more') || ev.target.parentNode.classList.contains('c-greedy-nav__btn--show-more'))
+    ) {
       OVERFLOW_LIST.classList.toggle('s-greedy-nav-hidden');
     } else {
       OVERFLOW_LIST.classList.add('s-greedy-nav-hidden');
