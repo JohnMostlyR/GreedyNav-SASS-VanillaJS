@@ -36,15 +36,13 @@
   let totalSpace = 0;
 
   // Get current visible items and their dimensions
-  VISIBLE_LIST
-    .childNodes
-    .forEach((node) => {
-      if (node.nodeType === 1) {
-        totalSpace += node.offsetWidth;
-        numOfItems += 1;
-        BREAK_WIDTHS.push(totalSpace);
-      }
-    });
+  for (let i = 0, l = VISIBLE_LIST.childNodes.length; i < l; i++) {
+    if (VISIBLE_LIST.childNodes[i].nodeType === 1) {
+      totalSpace += VISIBLE_LIST.childNodes[i].offsetWidth;
+      numOfItems += 1;
+      BREAK_WIDTHS.push(totalSpace);
+    }
+  }
 
   const TOTAL_SPACING = SPACE_BETWEEN_ITEMS * numOfItems;
 
@@ -97,9 +95,7 @@
 
   // Listen for click event
   w.addEventListener('click', (ev) => {
-    if (ev.target.classList.length > 0
-      && (ev.target.classList.contains('c-greedy-nav__btn--show-more') || ev.target.parentNode.classList.contains('c-greedy-nav__btn--show-more'))
-    ) {
+    if (ev.target.classList.contains('c-greedy-nav__btn--show-more') || ev.target.parentNode.classList.contains('c-greedy-nav__btn--show-more')) {
       OVERFLOW_LIST.classList.toggle('s-greedy-nav-hidden');
     } else {
       OVERFLOW_LIST.classList.add('s-greedy-nav-hidden');
