@@ -117,10 +117,12 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
   // Listen for click event
   root.addEventListener('click', function (ev) {
-    if (ev.target.classList.contains('c-greedy-nav__btn--show-more') || ev.target.parentNode.classList.contains('c-greedy-nav__btn--show-more')) {
-      _overflowList.classList.toggle('s-greedy-nav-hidden');
-    } else {
-      _overflowList.classList.add('s-greedy-nav-hidden');
+    if (ev.target && ev.target.classList) {
+      if (ev.target.classList.contains('c-greedy-nav__btn--show-more') || ev.target.parentNode.classList && ev.target.parentNode.classList.contains('c-greedy-nav__btn--show-more')) {
+        _overflowList.classList.toggle('s-greedy-nav-hidden');
+      } else {
+        _overflowList.classList.add('s-greedy-nav-hidden');
+      }
     }
   });
 
