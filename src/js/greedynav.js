@@ -4,107 +4,125 @@
  * @licence MIT - http://opensource.org/licenses/MIT
  * @copyright Johan Meester 2016
  */
-(function (w) {
-  const DOC = w.document;
+'use strict';
 
-  const NAV = DOC.querySelector('.c-greedy-nav');
-  const VISIBLE_LIST = NAV.querySelector('.c-greedy-nav__list--visible');
-  const OVERFLOW_LIST = NAV.querySelector('.c-greedy-nav__overflow-list');
-  const VIEW_MORE_ITEM = NAV.querySelector('.c-greedy-nav__list--show-more');
-  const VIEW_MORE_BUTTON = NAV.querySelector('.c-greedy-nav__btn--show-more');
-  const FIXED_BUTTON = NAV.querySelector('.c-greedy-nav__fixed');
-  const SPACE_BETWEEN_ITEMS = 0; // Set equal to stylesheet setting $c-greedy-nav-space-between-items
-  const BREAK_WIDTHS = [];
+(function (root) {
+  const _breakWidths = [];
+  const _bulletTimers = [];
+  const _interval = 100;
 
-  const theBullets = VIEW_MORE_BUTTON.querySelectorAll('.c-greedy-nav__bullet');
-  const interval = 100;
-  const bulletTimers = [];
+  let _availableSpace = 0;
+  let _doc = null;
+  let _fixedButton = null;
+  let _nav = null;
+  let _numOfItems = 0;
+  let _numOfVisibleItems = 0;
+  let _overflowList = null;
+  let _requiredSpace = 0;
+  let _showMoreAnimationTimer = 0;
+  let _theBullets = null;
+  let _totalSpace = 0;
+  let _totalSpacing = 0;
+  let _viewMoreButton = null;
+  let _viewMoreItem = null;
+  let _visibleList = null;
 
-  const animateEllipses = () => {
-    bulletTimers.forEach((timer) => {
-      w.clearTimeout(timer);
+  let spaceBetweenItems = 0; // Set equal to stylesheet setting $c-greedy-nav-space-between-items
+
+  const _animateEllipses = function () {
+    _bulletTimers.forEach((timer) => {
+      root.clearTimeout(timer);
     });
-    theBullets.forEach((bullet, index) => {
+    _theBullets.forEach((bullet, index) => {
       bullet.style = 'display: none;';
-      bulletTimers.push(w.setTimeout(() => {
+      _bulletTimers.push(root.setTimeout(() => {
         bullet.removeAttribute('style');
-      }, interval * (index + 1)));
+      }, _interval * (index + 1)));
     });
   };
 
-  let numOfItems = 0;
-  let totalSpace = 0;
-
-  // Get current visible items and their dimensions
-  for (let i = 0, l = VISIBLE_LIST.childNodes.length; i < l; i++) {
-    if (VISIBLE_LIST.childNodes[i].nodeType === 1) {
-      totalSpace += VISIBLE_LIST.childNodes[i].offsetWidth;
-      numOfItems += 1;
-      BREAK_WIDTHS.push(totalSpace);
-    }
-  }
-
-  const TOTAL_SPACING = SPACE_BETWEEN_ITEMS * numOfItems;
-
-  let availableSpace;
-  let numOfVisibleItems;
-  let requiredSpace;
-  let showMoreAnimationTimer;
-
-  /** @function fitAndAdjust */
-  const fitAndAdjust = (function f(recheck) {
+  /** @function _fitAndAdjust */
+  const _fitAndAdjust = (function f(recheck) {
     if (!recheck) {
-      w.clearTimeout(showMoreAnimationTimer);
+      root.clearTimeout(_showMoreAnimationTimer);
     }
 
     // Get current client width
-    availableSpace = NAV.clientWidth - FIXED_BUTTON.clientWidth - TOTAL_SPACING;
-    availableSpace -= VIEW_MORE_BUTTON.clientWidth;
+    _availableSpace = _nav.clientWidth - _fixedButton.clientWidth - _totalSpacing;
+    _availableSpace -= _viewMoreButton.clientWidth;
 
-    numOfVisibleItems = VISIBLE_LIST.getElementsByTagName('li').length;
-    requiredSpace = BREAK_WIDTHS[numOfVisibleItems - 1];
+    _numOfVisibleItems = _visibleList.getElementsByTagName('li').length;
+    _requiredSpace = _breakWidths[_numOfVisibleItems - 1];
 
-    if (requiredSpace > availableSpace) {
+    if (_requiredSpace > _availableSpace) {
       // There is not enough room
-      OVERFLOW_LIST.insertBefore(VISIBLE_LIST.lastChild, OVERFLOW_LIST.firstChild);
-      numOfVisibleItems -= 1;
+      _overflowList.insertBefore(_visibleList.lastChild, _overflowList.firstChild);
+      _numOfVisibleItems -= 1;
 
       // Check again
       f(true);
-    } else if (availableSpace > BREAK_WIDTHS[numOfVisibleItems]) {
+    } else if (_availableSpace > _breakWidths[_numOfVisibleItems]) {
       // More than enough room
-      VISIBLE_LIST.appendChild(OVERFLOW_LIST.firstChild);
-      numOfVisibleItems += 1;
+      _visibleList.appendChild(_overflowList.firstChild);
+      _numOfVisibleItems += 1;
 
       // Check again
       f(true);
     }
 
-    if (numOfVisibleItems === numOfItems) {
-      VIEW_MORE_ITEM.classList.add('s-greedy-nav-hidden');
+    if (_numOfVisibleItems === _numOfItems) {
+      _viewMoreItem.classList.add('s-greedy-nav-hidden');
     } else {
-      VIEW_MORE_ITEM.classList.remove('s-greedy-nav-hidden');
-      showMoreAnimationTimer = w.setTimeout(() => {
-        animateEllipses(theBullets);
+      _viewMoreItem.classList.remove('s-greedy-nav-hidden');
+      _showMoreAnimationTimer = root.setTimeout(() => {
+        _animateEllipses(_theBullets);
       }, 1000);
     }
   });
 
+  const _init = function () {
+    _doc = root.document;
+
+    _nav = _doc.querySelector('.c-greedy-nav');
+    _visibleList = _nav.querySelector('.c-greedy-nav__list--visible');
+    _overflowList = _nav.querySelector('.c-greedy-nav__overflow-list');
+    _viewMoreItem = _nav.querySelector('.c-greedy-nav__list--show-more');
+    _viewMoreButton = _nav.querySelector('.c-greedy-nav__btn--show-more');
+    _fixedButton = _nav.querySelector('.c-greedy-nav__fixed');
+
+    _theBullets = _viewMoreButton.querySelectorAll('.c-greedy-nav__bullet');
+
+    // Get current visible items and their dimensions
+    [..._visibleList.childNodes]
+      .filter((childNode) => {
+        return (childNode.nodeType === 1);
+      })
+      .forEach((childNode) => {
+        _totalSpace += childNode.offsetWidth;
+        _numOfItems += 1;
+        _breakWidths.push(_totalSpace);
+      });
+
+    _totalSpacing = spaceBetweenItems * _numOfItems;
+
+    _overflowList.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+    }, false);
+
+    _fitAndAdjust();
+  };
+
   // Listen for resize event
-  w.addEventListener('resize', fitAndAdjust, false);
+  root.addEventListener('resize', _fitAndAdjust, false);
 
   // Listen for click event
-  w.addEventListener('click', (ev) => {
+  root.addEventListener('click', (ev) => {
     if (ev.target.classList.contains('c-greedy-nav__btn--show-more') || ev.target.parentNode.classList.contains('c-greedy-nav__btn--show-more')) {
-      OVERFLOW_LIST.classList.toggle('s-greedy-nav-hidden');
+      _overflowList.classList.toggle('s-greedy-nav-hidden');
     } else {
-      OVERFLOW_LIST.classList.add('s-greedy-nav-hidden');
+      _overflowList.classList.add('s-greedy-nav-hidden');
     }
   });
 
-  OVERFLOW_LIST.addEventListener('click', (ev) => {
-    ev.stopPropagation();
-  }, false);
-
-  fitAndAdjust();
+  root.addEventListener('DOMContentLoaded', _init);
 }(typeof global !== 'undefined' ? global : window));
