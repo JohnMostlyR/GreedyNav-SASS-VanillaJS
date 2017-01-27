@@ -1,12 +1,12 @@
 # Greedy Navigation
-GreedyNav, https://github.com/lukejacksonn/GreedyNav, converted to SASS and Vanilla JS (ES6).
+GreedyNav forked from Luke Jacksonn his [GreedyNav](https://github.com/lukejacksonn/GreedyNav), converted to VanillaJS (ES6) with no dependencies. Besides that I made some functional and layout changes. Please check out the demo.
 
 ## Workings
-When the width of the screen becomes too small for all menu items to fit then items will be dropped from right to left until the menu fits within the page again. All items that are dropped are moved to a list of vertically stacked items that is initially hidden. The user is notified of any hidden items by a button that is appearing on the right showing. Pushing this button shows the list with moved items.
+When the width of the screen becomes too small for all menu items to fit then items will be dropped from right to left until the menu fits within the page again. All items that are dropped are moved to a list of vertically stacked items that is initially hidden. The user is notified of any hidden items by a button that is appearing on the right. Pushing this button shows the list with moved items.
 
 ## Demo
 
-http://codepen.io/jmeester/pen/yVpYqm
+Demo on [CodePen](http://codepen.io/jmeester/pen/yVpYqm)
 
 ## Usage
 ```html
