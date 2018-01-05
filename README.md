@@ -1,4 +1,6 @@
 # Greedy Navigation
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Mensae/GreedyNav-SASS-VanillaJS.svg)](https://greenkeeper.io/)
 GreedyNav forked from Luke Jacksonn his [GreedyNav](https://github.com/lukejacksonn/GreedyNav), converted to VanillaJS (ES6) with no dependencies. Besides that I made some functional and layout changes. Please check out the demo.
 
 ## Workings
